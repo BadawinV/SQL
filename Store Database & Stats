@@ -1,0 +1,33 @@
+-- Create a store database
+
+CREATE TABLE inventory (id INTEGER PRIMARY KEY, name TEXT, department TEXT, aisle INTEGER, price INTEGER, units_sold INTEGER);
+
+INSERT INTO inventory VALUES
+(1, "Frying Pan", "Housewares", 3, 12.99, 12),
+(2, "Pasta Pot", "Housewares", 3, 15.99, 15),
+(3, "Running Shoes", "Shoes", 7, 49.99, 10),
+(4, "Hiking Boots", "Shoes", 7, 65.99, 5),
+(5, "Trail Running Shoes", "Shoes", 7, 55.99, 9),
+(6, "Men's Shirt", "Men's Clothing", 12, 19.99, 24),
+(7, "Men's Shorts", "Men's Clothing", 12, 24.99, 13),
+(8, "Women's Shirt", "Women's Clothing", 14, 19.99, 15),
+(9, "Women's Shorts", "Women's Clothing", 14, 24.99, 20),
+(10, "Fishing Pole", "Sporting Goods", 5, 65.99, 11),
+(11, "Ammunition", "Sporting Goods", 7, 19.99, 35),
+(12, "Tent", "Outdoors", 8, 75.99, 18),
+(13, "Sleeping Bag", "Outdoors", 9, 39.99, 36),
+(14, "First Aid Kit", "Outdoors", 10, 24.99, 21),
+(15, "Pool Floatie", "Outdoors", 11, 15.99, 10);
+
+--display the database ordered by aisle.
+SELECT * FROM inventory 
+ORDER BY aisle;
+
+--what is the maximum number of units sold by name?
+SELECT name, MAX(units_sold) 
+FROM inventory 
+GROUP BY name;
+
+--what is the average price of an item?
+SELECT AVG(price) 
+FROM inventory;
