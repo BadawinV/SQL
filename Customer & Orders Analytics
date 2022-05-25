@@ -1,0 +1,10 @@
+--#7. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+
+SELECT COUNT(acctnum) as Total_Customers, AVG(Quantity)*price as Average_Price
+FROM BIT_DB.customers cust
+JOIN FebSales feb
+ON cust.order_id = feb.orderID
+WHERE feb.quantity > 2
+
+
+;
