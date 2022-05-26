@@ -35,8 +35,6 @@ SELECT DISTINCT product, price
 SELECT Product, MIN(price)
     FROM BIT_DB.FebSales
 
-
-
 #5. What is the total revenue for each product sold in January?
 SELECT SUM(quantity)*price AS revenue, product
   FROM BIT_DB.JanSales
@@ -55,3 +53,10 @@ AVG(quantity)*price AS avg_price
     LEFT JOIN BIT_DB.customers cust
     ON Feb.orderid=cust.order_id
     WHERE Feb.Quantity > 2
+    
+#8. List all the products sold in Los Angeles in February, and include how many of each were sold.
+
+SELECT Product, sum(quantity), location
+  FROM BIT_DB.FebSales 
+    WHERE location like '%Los Angeles%'
+    GROUP BY Product
