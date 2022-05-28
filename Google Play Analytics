@@ -1,0 +1,64 @@
+-- For this project, I downloaded Google Play Store data from Kaggle.
+-- Then I created a table to insert Google Play Store data into.
+-- Finally, I performed analytics on the data using SQL. 
+
+-- Creating the table: 
+
+CREATE TABLE BIT_DB.google_play_data (
+id integer PRIMARY KEY,
+    app_name varchar NOT NULL,
+    category varchar NOT NULL,
+    rating integer NOT NULL,
+    num_of_reviews integer NOT NULL,
+    file_size integer NOT NULL,
+    num_of_installs NOT NULL,
+    type varchar NOT NULL,
+    price integer NOT NULL,
+    content_rating varchar NOT NULL,
+    genre varchar NOT NULL,
+    last_updated date NOT NULL,
+    current_ver varchar NOT NULL,
+    android_ver varchar NOT NULL
+    )
+    ;
+
+-- Then I inserted the googleplaystore.csv into the table.
+
+-- Next, I explored the data using the following SQL. 
+
+-- First I determined the 25 highest rated apps.
+
+SELECT * 
+    FROM BIT_DB.google_play_data
+        ORDER BY rating DESC
+        LIMIT 25;
+
+-- There was an anomoly in the data, so I needed to correct that before proceeding any further.
+
+UPDATE BIT_DB.google_play_data
+SET category = 'PHOTOGRAPHY', rating = '5', num_of_reviews = '40', file_size = '3.0M', num_of_installs = '1,000+',
+    type = 'Free', price = '0', content_rating = 'Everyone', genre = 'Photography', last_updated = '11-Feb-18', 
+    current_ver = '1.0.19', android_ver ='4.0 and up'
+WHERE id = 10473
+
+-- Then I determined the top 10 highest rated and paid type of apps. 
+
+SELECT app_name, category, rating, price, content_rating
+    FROM BIT_DB.google_play_data
+      WHERE type = "Paid"
+      AND price > "$2.99"
+      ORDER BY rating DESC
+      LIMIT 10;
+
+-- Then I determined the highest rated paid apps in each category
+
+SELECT category, app_name, rating, price
+    FROM BIT_DB.google_play_data
+        WHERE type = "Paid"
+        AND rating > 4.5
+        GROUP BY category;
+        
+-- Then I determined the average number of installs and average rating for each category
+SELECT category, ROUND(AVG(num_of_installs),0) AS Avg_Installs, ROUND(AVG(rating),1) AS Avg_Rating
+    FROM BIT_DB.google_play_data
+        GROUP BY category
