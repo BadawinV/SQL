@@ -119,3 +119,27 @@ SELECT e.FirstName || ' ' ||e.LastName AS Sales_Agent, ROUND(SUM(i.Total),2) AS 
     ORDER BY Total_Sales DESC
     LIMIT 1
 ;
+
+15. Show the Customer name, Country, name of tracks purchased, composer, and Sales Agent name 
+     for all invoices and customers in the USA.
+
+SELECT c.firstName||' '|| c.LastName AS Customer_Name, t.Name, t.Composer,
+    c.Country, e.FirstName||' '|| e.LastName AS Sales_Agent
+     FROM chinook.customers c
+     LEFT JOIN chinook.employees e ON c.SupportRepId = e.EmployeeId
+     LEFT JOIN chinook.invoices i ON i.CustomerId = c.CustomerId
+     LEFT JOIN chinook.invoice_items ii ON i.InvoiceId = ii.InvoiceID
+     LEFT JOIN chinook.tracks t ON t.TrackId = ii.TrackId
+     WHERE i.BillingCountry = 'USA'
+     ORDER BY Sales_Agent
+ ;
+
+16. Show the 5 most popular track names and their composers.
+
+SELECT COUNT(ii.TrackId) AS Num_Sold, t.Name, t.Composer
+     FROM invoice_items ii
+     LEFT JOIN tracks t ON t.TrackId = ii.TrackId
+     GROUP BY t.Name
+     ORDER BY Num_Sold DESC
+     LIMIT 5
+;
