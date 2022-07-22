@@ -144,3 +144,18 @@ SELECT COUNT(ii.TrackId) AS Num_Sold, t.Name, t.Composer
      LIMIT 5
 ;
 
+
+17. Find the total sales for each year.
+
+SELECT
+    CASE
+        WHEN InvoiceDate LIKE  '%2009%' THEN 2009
+         WHEN InvoiceDate LIKE  '%2010%' THEN 2010
+         WHEN InvoiceDate LIKE  '%2011%' THEN 2011
+         WHEN InvoiceDate LIKE  '%2012%' THEN 2012
+         WHEN InvoiceDate LIKE  '%2013%' THEN 2013
+        END AS 'Invoice_Year',
+        ROUND(SUM(Total),2) AS Total_Sales
+    FROM chinook.invoices
+GROUP BY Invoice_Year
+;
